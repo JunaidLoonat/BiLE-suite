@@ -1,14 +1,21 @@
-#1. Name
-BiLE Suite 
-#2. Author
+# 1. Name
+
+BiLE Suite
+
+# 2. Author
+
 Roelof Temmingh
-#3. License, version & release date
+
+# 3. License, version & release date
+
 License : GPLv2  
 Version : v1.0  
 Release Date : Unknown
 
-#4. Description
-##4.1 BiLE.pl
+# 4. Description
+
+## 4.1 BiLE.pl
+
 The Bi-directional Link Extractor. BiLE leans on Google and HTTrack to
 automate the collections to and from the target site, and then applies a
 simple statistical weighing algorithm to deduce which Web sites have the
@@ -16,7 +23,9 @@ strongest .relationships. with the target site.
 
 We run BiLE.pl against the target Web site by simply specifying the Website
 address and a name for the output file.
-##4.2 BiLE-weight.pl
+
+## 4.2 BiLE-weight.pl
+
 The next tool used in the collection is BiLE-weigh, which takes the output
 of BiLE and calculates the significance of each site found. The weighing
 algorithm is complex and the details will not be discussed; what should be
@@ -32,12 +41,15 @@ A link from a site with many links weighs less than a link from a site
 with fewer links.
 A link from a site weighs more than a link to a site.
 
-##4.3 tld-expand.pl
-The tld-expand.pl script is used to find domains in any other TLDs. 
-##4.4 vet-IPrange.pl
+## 4.3 tld-expand.pl
+
+The tld-expand.pl script is used to find domains in any other TLDs.
+
+## 4.4 vet-IPrange.pl
+
 The output of BiLE-weigh now lists a number of domains with a relevance
 number. The sites with a lower relevance number that are situated much lower
-down the list are not as important as the top sites.The results from the
+down the list are not as important as the top sites. The results from the
 BiLE-weigh have listed a number of domains with their relevance to our
 target Web site. Sites that rank much further down the list are not as
 important as the top sites. The next step is to take the list of sites and
@@ -48,13 +60,17 @@ supplied list of DNS names. It will then write the IP address of each lookup
 into a file, and then perform a lookup on a second set of names. If the IP
 address matches any of the IP addresses obtained from the first step, the
 tool will add the DNS name to the file.
-#4.5 qtrace.pl
+
+## 4.5 qtrace.pl
+
 qtrace is used to plot the boundaries of networks. It uses a heavily
 modified traceroute using a #custom compiled hping# to perform multiple
 traceroutes to boundary sections of a class C network. qtrace uses a list of
 single IP addresses to test the network size. Output is written to a
 specified file.
-##4.6 vet-mx.pl
+
+## 4.6 vet-mx.pl
+
 Looking at the MX records of a company can also be used to group domains
 together. For this process, we use the vet-mx tool. The tool performs MX
 lookups for a list of domains, and stores each IP it gets in a file. vet-mx
@@ -62,21 +78,26 @@ performs a second run of lookups on a list of domains, and if any of the IPs
 of the MX records matches any of the first phase IPs found, the domain is
 added to the output file.
 
-##4.7 jarf-rev.pl
+## 4.7 jarf-rev.pl
+
 jarf-rev is used to perform a reverse DNS lookup on an IP range. All reverse
 entries that match the filter file are displayed to screen (STDOUT). The
 output displayed is the DNS name followed by IP address.
 
-##4.8 jarl-dnsbrute.pl
+## 4.8 jarl-dnsbrute.pl
+
 The jarf-dnsbrute script is a DNS brute forcer, for when DNS zone transfers
 are not allowed. jarf-dnsbrute will perform forward DNS lookups using a
 specified domain name with a list of names for hosts. The script is
 multithreaded, setting off up to 10 threads at a time.
 
-#5. Usage
-##5.1 BiLE.pl
+# 5. Usage
+
+## 5.1 BiLE.pl
+
 > perl bile-weigh.pl www.sensepost.com sp\_bile\_out.txt.mine out.txt
-Two output files are produced, *.mine and *.walrus, for now *.mine is the
+
+Two output files are produced, \*.mine and \*.walrus, for now \*.mine is the
 important file we will use later.
 
 This command will run for some time. BiLE will use HTTrack to download and
@@ -96,7 +117,8 @@ Web site), you want to sort them according to relevance. The tool we use
 here, bile-weigh.pl, uses a complex formula to sort the relationships so you
 can easily see which are most important.
 
-##5.2 BiLE-weight.pl
+## 5.2 BiLE-weight.pl
+
 > perl bile-weigh.pl www.sensepost.com sp\_bile\_out.txt.mine out.txt
 
 Input fields:  
@@ -130,13 +152,14 @@ The number you see next to each site is the .weight. that BiLE has assigned.
 The weight in itself is an arbitrary value and of no real use to us. What is
 interesting, however, is the relationship between the values of the sites.
 The rate at which the sites discovered become less relevant is referred to
-as the .rate of decay.. A slow rate of decay means there are many sites with
-a high relevance.an indication of widespread cross-linking. A steep decent
-shows us that the site is fairly unknown and unconnected.a stand-alone site.
+as the rate of decay. A slow rate of decay means there are many sites with
+a high relevance - an indication of widespread cross-linking. A steep decent
+shows us that the site is fairly unknown and unconnected - a stand-alone site.
 It is in the latter case that HTML Link Analysis becomes interesting to us,
 as these links are likely to reflect actual business relationships.
 
-##5.3 tld-expand.pl
+## 5.3 tld-expand.pl
+
 > perl exp-tld.pl [input file] [output file]
 
 Input fields:  
@@ -148,7 +171,9 @@ Output file, is the output file containing domains expanded by TLD
 Note:  
 tld-expand will run for awhile depending on how many domains are listed in
 the input file. One can monitor the output by; tail -f outputfilename
-#5.4 vet-IPrange.pl
+
+# 5.4 vet-IPrange.pl
+
 > perl vet-IPrange.pl [input file] [true domain file] [output file] < range >
 
 Input fields:  
@@ -158,7 +183,8 @@ True domain file contains list of domains to be compared to
 Output:  
 Output file a file containing matched domains
 
-##5.5 qtrace.pl
+## 5.5 qtrace.pl
+
 > perl qtrace.pl [ip_address_file] [output_file]
 
 Input fields:  
@@ -171,8 +197,10 @@ perl qtrace.pl ip\_list.txt outputfile.txt
 Output format:  
 Network range 10.10.1.1-10.10.28
 
-##5.6 vet-mx.pl
+## 5.6 vet-mx.pl
+
 > perl vet-mx.pl [input file] [true domain file] [output file]
+
 Input fields:  
 Input file, is the file containing a list of domains  
 True domain file contains list of domains to be compared to
@@ -180,21 +208,23 @@ True domain file contains list of domains to be compared to
 Output:  
 Output file, is an output file containing matched domains
 
-##5.7 jarf-rey
+## 5.7 jarf-rey
+
 > perl jarf-rev [subnetblock]
+
 Input fields:  
 Subnetblock specified is the first three octets of network address
 
 Typical use:  
 > perl jarf-rev 192.168.37.1-192.168.37.118
+
 Output format:  
 DNS name ; IP number  
 DNS name is blank if no reverse entry could be discovered.
 
-##5.8 jarf-dnsbrute.pl
+## 5.8 jarf-dnsbrute.pl
 
 > perl jarf-dnsbrute [domain_name] [file_with_names]
-
 
 Input fields:  
 Domain name the domain name  
@@ -206,8 +236,9 @@ Typical use:
 Output format:  
 DNS name ; IP number
 
-#6. Requirements
-##6.1 BiLE.pl
+# 6. Requirements
+
+## 6.1 BiLE.pl
 
 In order for BiLE.pl to run correctly httrack needs to be installed on the
 operating system. Line 67 of BiLE.pl can be modified to point to the httrack
@@ -219,31 +250,32 @@ to
 
 > $mc="/home/sensepost/tools/httrack $site......
 
-##6.2 BiLE-weigh.pl
+## 6.2 BiLE-weigh.pl
 
-There are no real requirements, except that the script requires the *.bile
+There are no real requirements, except that the script requires the \*.bile
 output file from the BiLE.pl script
 
-##6.3 tld-expand.pl
+## 6.3 tld-expand.pl
+
 N/A
 
-##6.4 vet-IPrange.pl
+## 6.4 vet-IPrange.pl
+
 N/A
 
-##6.5 qtrace.pl
+## 6.5 qtrace.pl
 
 NB! hping-1s is a recompiled hping with setuid support,1sec timeout - setuid  
 Note: remember to allow icmp type 11 into your network!
 
 Line 59 of qtrace.pl can be modified to point to the hping-1s executable:
 
-> my @res=`hping-1s -2......
+> my @res=`hping-1s -2......``
 
 to
 
-> my @res=`/home/sensepost/tools/modified/hping-1s -2.....
+> my @res=`/home/sensepost/tools/modified/hping-1s -2.....`
 
-##6.6 vet-mx.pl
+## 6.6 vet-mx.pl
+
 N/A
-
-
