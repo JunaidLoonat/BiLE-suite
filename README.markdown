@@ -270,11 +270,11 @@ Note: remember to allow icmp type 11 into your network!
 
 Line 59 of qtrace.pl can be modified to point to the hping-1s executable:
 
-> my @res=`hping-1s -2......``
+> my @res=\`hping-1s -2......\`
 
 to
 
-> my @res=`/home/sensepost/tools/modified/hping-1s -2.....`
+> my @res=\`/home/sensepost/tools/modified/hping-1s -2.....\`
 
 ## 6.6 vet-mx.pl
 
